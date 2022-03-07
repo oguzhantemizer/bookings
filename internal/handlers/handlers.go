@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
 	"net/http"
 
-	"github.com/oguzhantemizer/bookings/pkg/config"
-	"github.com/oguzhantemizer/bookings/pkg/models"
-	"github.com/oguzhantemizer/bookings/pkg/render"
+	"github.com/oguzhantemizer/bookings/internal/config"
+	"github.com/oguzhantemizer/bookings/internal/models"
+	"github.com/oguzhantemizer/bookings/internal/render"
 )
 
 // Repo the repository used by the handlers
@@ -72,11 +73,23 @@ func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
 }
 
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
 //Availibility renders
-func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
-	start := r.Form.Get("start")
-	end := r.Form.Get("end")
-	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		log.Println(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 //Contact pages render

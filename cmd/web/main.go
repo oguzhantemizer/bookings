@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/oguzhantemizer/bookings/pkg/config"
-	"github.com/oguzhantemizer/bookings/pkg/handlers"
-	"github.com/oguzhantemizer/bookings/pkg/render"
+	"github.com/oguzhantemizer/bookings/internal/config"
+	"github.com/oguzhantemizer/bookings/internal/handlers"
+	"github.com/oguzhantemizer/bookings/internal/render"
 
 	"github.com/alexedwards/scs/v2"
 )
