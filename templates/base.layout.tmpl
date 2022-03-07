@@ -92,6 +92,18 @@
     <script src="https://unpkg.com/notie"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
 
+    {{with .Error}}
+    <script>notify("{{.}}", "error");</script>
+    {{end}}
+
+    {{with .Flash}}
+    <script>("{{.}}", "success");</script>
+    {{end}}
+
+    {{with .Warning}}
+    <script>notify("{{.}}", "warning");</script>
+    {{end}}
+
     {{block "js" .}}
 
     {{end}}
