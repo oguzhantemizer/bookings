@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -54,11 +55,6 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-//Reservation renders the make a reservation page and displays form
-func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
-}
-
 //Kings renders the room page
 func (m *Repository) Kings(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "kings.page.tmpl", &models.TemplateData{})
@@ -74,6 +70,7 @@ func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
 }
 
+//Reservation renders the make a reservation page and displays form
 func (m *Repository) MakeReservation(w http.ResponseWriter, r *http.Request) {
 	var emptyReservation models.Reservation
 	data := make(map[string]interface{})
@@ -119,6 +116,14 @@ func (m *Repository) PostMakeReservation(w http.ResponseWriter, r *http.Request)
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 
+}
+
+// PostAvailability handles post
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
+	start := r.Form.Get("start")
+	end := r.Form.Get("end")
+
+	w.Write([]byte(fmt.Sprintf("start date is %s and end is %s", start, end)))
 }
 
 type jsonResponse struct {
