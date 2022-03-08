@@ -20,6 +20,12 @@ var theTest = []struct {
 	expectedStatusCode int
 }{
 	{"home", "/", "GET", []postData{}, http.StatusOK},
+	{"about", "/about", "GET", []postData{}, http.StatusOK},
+	{"gq", "/kings-suite", "GET", []postData{}, http.StatusOK},
+	{"sa", "/search-availability", "GET", []postData{}, http.StatusOK},
+	{"contact", "/contact", "GET", []postData{}, http.StatusOK},
+	{"sa", "/make-reservation", "GET", []postData{}, http.StatusOK},
+	{"ms", "/major-suite", "GET", []postData{}, http.StatusOK},
 }
 
 func TestHandlers(t *testing.T) {
@@ -38,8 +44,6 @@ func TestHandlers(t *testing.T) {
 			if resp.StatusCode != e.expectedStatusCode {
 				t.Error(fmt.Sprintf("for %s, expected %d but got %d", e.name, e.expectedStatusCode, resp.StatusCode))
 			}
-		} else {
-
 		}
 	}
 }

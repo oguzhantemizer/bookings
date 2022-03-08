@@ -14,8 +14,6 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/justinas/nosurf"
 	"github.com/oguzhantemizer/bookings/internal/config"
-
-	//"github.com/oguzhantemizer/bookings/internal/handlers"
 	"github.com/oguzhantemizer/bookings/internal/models"
 	"github.com/oguzhantemizer/bookings/internal/render"
 )
@@ -26,7 +24,7 @@ var pathToTemplates = "./../../templates"
 var functions = template.FuncMap{}
 
 func getRoutes() http.Handler {
-	//what am i going to put in the session
+	// what am I going to put in the session
 	gob.Register(models.Reservation{})
 
 	// change this to true when in production
@@ -73,7 +71,6 @@ func getRoutes() http.Handler {
 	mux.Get("/make-reservation", Repo.MakeReservation)
 	mux.Post("/make-reservation", Repo.PostMakeReservation)
 	mux.Get("/reservation-summary", Repo.ReservationSummary)
-
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
@@ -98,7 +95,7 @@ func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
-// CreateTemplateCache creates a template cache as a map
+// CreateTestTemplateCache creates a template cache as a map
 func CreateTestTemplateCache() (map[string]*template.Template, error) {
 
 	myCache := map[string]*template.Template{}
@@ -121,7 +118,7 @@ func CreateTestTemplateCache() (map[string]*template.Template, error) {
 		}
 
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob("./templates/*.layout.tmpl")
+			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 			if err != nil {
 				return myCache, err
 			}
