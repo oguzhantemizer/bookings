@@ -301,10 +301,38 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: room_restrictions_reservation_id_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX room_restrictions_reservation_id_idx ON public.room_restrictions USING btree (reservation_id);
+
+
+--
+-- Name: room_restrictions_room_id_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX room_restrictions_room_id_idx ON public.room_restrictions USING btree (room_id);
+
+
+--
+-- Name: room_restrictions_start_date_end_date_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX room_restrictions_start_date_end_date_idx ON public.room_restrictions USING btree (start_date, end_date);
+
+
+--
 -- Name: schema_migration_version_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USING btree (version);
+
+
+--
+-- Name: users_email_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX users_email_idx ON public.users USING btree (email);
 
 
 --
@@ -313,6 +341,22 @@ CREATE UNIQUE INDEX schema_migration_version_idx ON public.schema_migration USIN
 
 ALTER TABLE ONLY public.reservations
     ADD CONSTRAINT reservations_rooms_id_fk FOREIGN KEY (room_id) REFERENCES public.rooms(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: room_restrictions room_restrictions_restrictions_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room_restrictions
+    ADD CONSTRAINT room_restrictions_restrictions_id_fk FOREIGN KEY (restriction_id) REFERENCES public.restrictions(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: room_restrictions room_restrictions_rooms_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room_restrictions
+    ADD CONSTRAINT room_restrictions_rooms_id_fk FOREIGN KEY (room_id) REFERENCES public.rooms(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
