@@ -7,10 +7,13 @@ import (
 	"net/http"
 
 	"github.com/oguzhantemizer/bookings/internal/config"
+	"github.com/oguzhantemizer/bookings/internal/driver"
 	"github.com/oguzhantemizer/bookings/internal/forms"
 	"github.com/oguzhantemizer/bookings/internal/helpers"
 	"github.com/oguzhantemizer/bookings/internal/models"
 	"github.com/oguzhantemizer/bookings/internal/render"
+	"github.com/oguzhantemizer/bookings/internal/repository"
+	"github.com/oguzhantemizer/bookings/internal/repository/dbrepo"
 )
 
 // Repo the repository used by the handlers
@@ -19,12 +22,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
@@ -35,7 +40,7 @@ func NewHandlers(r *Repository) {
 
 // Home is the handler for the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-
+	m.DB.AllUsers()
 	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
