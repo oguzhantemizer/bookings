@@ -2,16 +2,8 @@ package models
 
 import "time"
 
-//Reservation holds reservatioın data
-type Reservation struct {
-	FirstName string
-	LastName  string
-	Email     string
-	Phone     string
-}
-
 //Users is the user model
-type Users struct {
+type User struct {
 	ID          int
 	FirstName   string
 	LastName    string
@@ -23,7 +15,7 @@ type Users struct {
 }
 
 //Rooms is the room model
-type Rooms struct {
+type Room struct {
 	ID        int
 	RoomName  string
 	CreatedAt time.Time
@@ -31,7 +23,7 @@ type Rooms struct {
 }
 
 //Restrictions is the restriction model
-type Restrictions struct {
+type Restriction struct {
 	ID              int
 	RestrictionName string
 	CreatedAt       time.Time
@@ -39,7 +31,7 @@ type Restrictions struct {
 }
 
 //Reservations is the reservation model
-type Reservations struct {
+type Reservation struct {
 	ID        int
 	FirstName string
 	LastName  string
@@ -50,20 +42,20 @@ type Reservations struct {
 	RoomID    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Room      Rooms
+	Room      Room
 }
 
 //RoomRestriction is the restriction model
-type RoomRestrictions struct {
+type RoomRestriction struct {
 	ID            int
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	StartDate     time.Time
 	EndDate       time.Time
 	RoomID        int
-	Room          Rooms
+	Room          Room
 	ReservationID int
-	Reservation   Reservations
+	Reservation   Reservation
 	RestrictionID int
-	Restriction   Restrictions
+	Restriction   Restriction
 }
